@@ -12,19 +12,6 @@ An interactive Data Structures and Algorithms visualizer built with C++ and Qt6.
 3. Run `ds_visualizer.exe`
 4. No installation needed!
 
-### Linux Users
-**[Download Latest Release](https://github.com/AnshulMishra2003/CPP-DSA-Visualizer/releases)**
-
-1. Download `ds_visualizer.AppImage`
-2. Make it executable: `chmod +x ds_visualizer.AppImage`
-3. Run: `./ds_visualizer.AppImage`
-
-### macOS Users
-**[Download Latest Release](https://github.com/AnshulMishra2003/CPP-DSA-Visualizer/releases)**
-
-1. Download `ds_visualizer-macos.dmg`
-2. Open and drag to Applications
-3. Run from Applications folder
 
 ---
 
