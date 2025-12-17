@@ -2,6 +2,32 @@
 
 An interactive Data Structures and Algorithms visualizer built with C++ and Qt6.
 
+## ⚡ Quick Start - Download & Run
+
+### Windows Users
+**[Download Latest Release](https://github.com/AnshulMishra2003/CPP-DSA-Visualizer/releases)**
+
+1. Download `ds_visualizer-windows.zip` from releases
+2. Extract the folder
+3. Run `ds_visualizer.exe`
+4. No installation needed!
+
+### Linux Users
+**[Download Latest Release](https://github.com/AnshulMishra2003/CPP-DSA-Visualizer/releases)**
+
+1. Download `ds_visualizer.AppImage`
+2. Make it executable: `chmod +x ds_visualizer.AppImage`
+3. Run: `./ds_visualizer.AppImage`
+
+### macOS Users
+**[Download Latest Release](https://github.com/AnshulMishra2003/CPP-DSA-Visualizer/releases)**
+
+1. Download `ds_visualizer-macos.dmg`
+2. Open and drag to Applications
+3. Run from Applications folder
+
+---
+
 ## Features
 
 ### Data Structures Visualization
@@ -24,7 +50,13 @@ An interactive Data Structures and Algorithms visualizer built with C++ and Qt6.
 - 📈 Step-by-step algorithm animations
 - 🖱️ Scrollable viewport for large data structures
 
-## Requirements
+---
+
+## Building from Source (For Developers)
+
+If you want to build from source instead of using pre-built executables:
+
+### Requirements
 
 - CMake 3.16 or higher
 - Qt 6.10.1 or higher
@@ -59,6 +91,116 @@ After building, run the executable:
 
 # Linux/macOS
 ./ds_visualizer
+```
+
+## Deployment & Distribution
+
+### Creating Release Builds
+
+For deployment, create an optimized release build:
+
+#### Windows (MinGW)
+```bash
+mkdir build-release
+cd build-release
+cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release ..
+cmake --build .
+```
+
+#### Linux/macOS
+```bash
+mkdir build-release
+cd build-release
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make
+```
+
+### Creating Executable Packages
+
+#### Windows Standalone EXE with Dependencies
+1. Build in Release mode (see above)
+2. Copy required DLLs to the executable directory:
+   - From Qt installation: `bin/Qt6Core.dll`, `bin/Qt6Gui.dll`, `bin/Qt6Widgets.dll`
+   - Platform plugin: `plugins/platforms/qwindows.dll`
+   
+Example directory structure:
+```
+ds_visualizer/
+├── ds_visualizer.exe
+├── Qt6Core.dll
+├── Qt6Gui.dll
+├── Qt6Widgets.dll
+└── plugins/
+    └── platforms/
+        └── qwindows.dll
+```
+
+3. Zip the folder for distribution
+
+#### Creating Installer (Windows)
+- Use NSIS (Nullsoft Scriptable Install System) or WiX Toolset
+- Or use Qt's deployment tools: `windeployqt ds_visualizer.exe`
+
+#### Linux AppImage
+```bash
+# Install linuxdeploy and linuxdeploy-plugin-qt
+./linuxdeploy-x86_64.AppImage --appdir AppDir --executable build/ds_visualizer
+./linuxdeploy-plugin-qt-x86_64.AppImage --appdir AppDir
+./appimagetool-x86_64.AppImage AppDir ds_visualizer.AppImage
+```
+
+#### macOS App Bundle
+```bash
+mkdir -p ds_visualizer.app/Contents/MacOS
+mkdir -p ds_visualizer.app/Contents/Resources
+cp build/ds_visualizer ds_visualizer.app/Contents/MacOS/
+macdeployqt ds_visualizer.app -dmg
+```
+
+### Qt Deployment Tools
+
+#### Automatic Deployment (Windows)
+```bash
+# From Qt bin directory or command line
+windeployqt <path-to-executable>
+```
+
+This automatically copies all required Qt libraries and plugins.
+
+#### Automatic Deployment (Linux)
+```bash
+linuxdeployqt <path-to-executable> -appimage
+```
+
+### Release Checklist
+
+- [ ] Build in Release mode with optimizations
+- [ ] Test all features on target platform
+- [ ] Copy all required dependencies
+- [ ] Test on clean machine without development tools
+- [ ] Create version file/release notes
+- [ ] Sign executable (recommended for Windows)
+- [ ] Create installer or package
+- [ ] Test installer/package on clean system
+- [ ] Upload to GitHub Releases
+
+### GitHub Releases
+
+To create a release on GitHub:
+
+1. Build release executables for all platforms
+2. Go to your GitHub repository → Releases → Draft a new release
+3. Create a new tag (e.g., `v1.0.0`)
+4. Add release notes
+5. Upload compiled executables and installers
+6. Publish the release
+
+Example:
+```bash
+# After building, create release folder
+mkdir releases
+cp build-release/ds_visualizer.exe releases/ds_visualizer-windows.exe
+cp build-release/ds_visualizer releases/ds_visualizer-linux
 ```
 
 ## Project Structure
