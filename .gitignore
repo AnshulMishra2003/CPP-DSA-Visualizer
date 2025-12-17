@@ -33,6 +33,10 @@ moc_*.cpp
 ui_*.h
 qrc_*.cpp
 
+# Build scripts
+build.bat
+build.sh
+
 # OS files
 .DS_Store
 Thumbs.db
