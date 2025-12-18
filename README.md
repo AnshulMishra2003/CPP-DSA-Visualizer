@@ -4,13 +4,30 @@ An interactive Data Structures and Algorithms visualizer built with C++ and Qt6.
 
 ## ⚡ Quick Start - Download & Run
 
-### Windows Users
+### Windows (prebuilt)
 **[Download Latest Release](https://github.com/AnshulMishra2003/CPP-DSA-Visualizer/releases)**
 
-1. Download `ds_visualizer-windows.zip` from releases
-2. Extract the folder
-3. Run `ds_visualizer.exe`
-4. No installation needed!
+1) Grab `CPP-DSA-Visualizer-v1.0.0-windows.zip`
+2) Extract it
+3) Run `ds_visualizer.exe` inside the extracted folder (do **not** move the `platforms/` subfolder)
+4) Works on Windows 10/11 (64-bit) without installing Qt
+
+### macOS (build locally on a Mac)
+No macOS binary is shipped. Build on a Mac with Qt 6:
+```bash
+cmake -B build-macos -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$HOME/Qt/6.10.1/macos/lib/cmake"
+cmake --build build-macos --config Release
+$HOME/Qt/6.10.1/macos/bin/macdeployqt build-macos/ds_visualizer.app -dmg
+```
+Distribute the generated `build-macos/ds_visualizer.dmg` to Mac users.
+
+### Linux
+Build from source with your distro’s Qt 6:
+```bash
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
+./build/ds_visualizer
+```
 
 
 ---
@@ -39,156 +56,54 @@ An interactive Data Structures and Algorithms visualizer built with C++ and Qt6.
 
 ---
 
-## Building from Source (For Developers)
+## Building from Source (developers)
 
-If you want to build from source instead of using pre-built executables:
+Requirements:
+- CMake ≥ 3.16
+- Qt 6.10.1 (or newer) matching your compiler
+- C++17 toolchain (MinGW 13.1 on Windows, clang/gcc on macOS/Linux)
 
-### Requirements
-
-- CMake 3.16 or higher
-- Qt 6.10.1 or higher
-- C++17 compatible compiler
-  - MinGW 13.1.0 (Windows)
-  - GCC/Clang (Linux/macOS)
-
-## Building the Project
-
-### Windows (MinGW)
+Windows (MinGW):
 ```bash
-mkdir build
-cd build
-cmake -G "MinGW Makefiles" ..
-cmake --build .
+cmake -B build -G "MinGW Makefiles"
+cmake --build build --config Release
 ```
 
-### Linux/macOS
+Linux/macOS:
 ```bash
-mkdir build
-cd build
-cmake ..
-make
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
 ```
 
-## Running the Application
-
-After building, run the executable:
+Run after build:
 ```bash
 # Windows
-./ds_visualizer.exe
-
+./build/ds_visualizer.exe
 # Linux/macOS
-./ds_visualizer
+./build/ds_visualizer
 ```
 
-## Deployment & Distribution
+## Packaging for distribution
 
-### Creating Release Builds
-
-For deployment, create an optimized release build:
-
-#### Windows (MinGW)
+### Windows (already provided as ZIP)
+If you rebuild locally and need a fresh ZIP:
 ```bash
-mkdir build-release
-cd build-release
-cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release ..
-cmake --build .
+cmake -B build-release -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+cmake --build build-release --config Release
+& "C:/Qt/6.10.1/mingw_64/bin/windeployqt.exe" --release --compiler-runtime build-release/ds_visualizer.exe
 ```
+Ensure `ds_visualizer.exe`, Qt6*.dll, and `platforms/qwindows.dll` stay together; then zip the folder.
 
-#### Linux/macOS
+### macOS bundle (local build on Mac)
 ```bash
-mkdir build-release
-cd build-release
-cmake -DCMAKE_BUILD_TYPE=Release ..
-make
+cmake -B build-macos -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$HOME/Qt/6.10.1/macos/lib/cmake"
+cmake --build build-macos --config Release
+$HOME/Qt/6.10.1/macos/bin/macdeployqt build-macos/ds_visualizer.app -dmg
 ```
+Ship `ds_visualizer.dmg` to Mac users.
 
-### Creating Executable Packages
-
-#### Windows Standalone EXE with Dependencies
-1. Build in Release mode (see above)
-2. Copy required DLLs to the executable directory:
-   - From Qt installation: `bin/Qt6Core.dll`, `bin/Qt6Gui.dll`, `bin/Qt6Widgets.dll`
-   - Platform plugin: `plugins/platforms/qwindows.dll`
-   
-Example directory structure:
-```
-ds_visualizer/
-├── ds_visualizer.exe
-├── Qt6Core.dll
-├── Qt6Gui.dll
-├── Qt6Widgets.dll
-└── plugins/
-    └── platforms/
-        └── qwindows.dll
-```
-
-3. Zip the folder for distribution
-
-#### Creating Installer (Windows)
-- Use NSIS (Nullsoft Scriptable Install System) or WiX Toolset
-- Or use Qt's deployment tools: `windeployqt ds_visualizer.exe`
-
-#### Linux AppImage
-```bash
-# Install linuxdeploy and linuxdeploy-plugin-qt
-./linuxdeploy-x86_64.AppImage --appdir AppDir --executable build/ds_visualizer
-./linuxdeploy-plugin-qt-x86_64.AppImage --appdir AppDir
-./appimagetool-x86_64.AppImage AppDir ds_visualizer.AppImage
-```
-
-#### macOS App Bundle
-```bash
-mkdir -p ds_visualizer.app/Contents/MacOS
-mkdir -p ds_visualizer.app/Contents/Resources
-cp build/ds_visualizer ds_visualizer.app/Contents/MacOS/
-macdeployqt ds_visualizer.app -dmg
-```
-
-### Qt Deployment Tools
-
-#### Automatic Deployment (Windows)
-```bash
-# From Qt bin directory or command line
-windeployqt <path-to-executable>
-```
-
-This automatically copies all required Qt libraries and plugins.
-
-#### Automatic Deployment (Linux)
-```bash
-linuxdeployqt <path-to-executable> -appimage
-```
-
-### Release Checklist
-
-- [ ] Build in Release mode with optimizations
-- [ ] Test all features on target platform
-- [ ] Copy all required dependencies
-- [ ] Test on clean machine without development tools
-- [ ] Create version file/release notes
-- [ ] Sign executable (recommended for Windows)
-- [ ] Create installer or package
-- [ ] Test installer/package on clean system
-- [ ] Upload to GitHub Releases
-
-### GitHub Releases
-
-To create a release on GitHub:
-
-1. Build release executables for all platforms
-2. Go to your GitHub repository → Releases → Draft a new release
-3. Create a new tag (e.g., `v1.0.0`)
-4. Add release notes
-5. Upload compiled executables and installers
-6. Publish the release
-
-Example:
-```bash
-# After building, create release folder
-mkdir releases
-cp build-release/ds_visualizer.exe releases/ds_visualizer-windows.exe
-cp build-release/ds_visualizer releases/ds_visualizer-linux
-```
+### Linux
+Build from source with your distro’s Qt; optionally create an AppImage using linuxdeployqt.
 
 ## Project Structure
 
