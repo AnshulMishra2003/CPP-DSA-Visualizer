@@ -4,6 +4,15 @@ An interactive Data Structures and Algorithms visualizer built with C++ and Qt6.
 
 ## ⚡ Quick Start - Download & Run
 
+## 🎥 Demo Video
+
+▶️ Click below to watch the live demo of the application:
+
+
+https://github.com/user-attachments/assets/d5757d3f-210c-4955-bdd4-1b369336a120
+
+
+
 ### Windows (prebuilt)
 **[Download Latest Release](https://github.com/AnshulMishra2003/CPP-DSA-Visualizer/releases)**
 
