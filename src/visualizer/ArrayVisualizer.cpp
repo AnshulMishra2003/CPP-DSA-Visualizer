@@ -170,7 +170,11 @@ ArrayVisualizer::ArrayVisualizer(QWidget *parent)
     clearBtn = new QPushButton("\U0001F5D1\uFE0F Clear All");
     clearBtn->setStyleSheet(btnStyle.arg("#95a5a6", "#7f8c8d", "#5d6d7e"));
     
+    reloadBtn = new QPushButton("\U0001F504 Reload");
+    reloadBtn->setStyleSheet(btnStyle.arg("#3498db", "#2980b9", "#21618c"));
+    
     buttonRow3->addWidget(clearBtn);
+    buttonRow3->addWidget(reloadBtn);
     buttonRow3->addStretch();
     
     controlLayout->addLayout(buttonRow3);
@@ -201,6 +205,7 @@ ArrayVisualizer::ArrayVisualizer(QWidget *parent)
     connect(sortBtn, &QPushButton::clicked, this, &ArrayVisualizer::onSort);
     connect(reverseBtn, &QPushButton::clicked, this, &ArrayVisualizer::onReverse);
     connect(clearBtn, &QPushButton::clicked, this, &ArrayVisualizer::onClear);
+    connect(reloadBtn, &QPushButton::clicked, this, &ArrayVisualizer::onReload);
     connect(pushBackBtn, &QPushButton::clicked, this, &ArrayVisualizer::onPushBack);
     connect(popBackBtn, &QPushButton::clicked, this, &ArrayVisualizer::onPopBack);
 }
@@ -497,6 +502,15 @@ void ArrayVisualizer::onClear()
     highlightIndex = -1;
     updateStatus("All elements cleared from array", "success");
     
+    update();
+}
+
+void ArrayVisualizer::onReload()
+{
+    array.clear();
+    array = {15, 42, 8, 23, 56, 31, 19, 67};
+    highlightIndex = -1;
+    updateStatus("Array reloaded with sample data", "success");
     update();
 }
 

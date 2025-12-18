@@ -24,6 +24,7 @@ private slots:
     void onSort();
     void onReverse();
     void onClear();
+    void onReload();
     void onPushBack();
     void onPopBack();
 
@@ -45,6 +46,7 @@ private:
     QPushButton *sortBtn;
     QPushButton *reverseBtn;
     QPushButton *clearBtn;
+    QPushButton *reloadBtn;
     QPushButton *pushBackBtn;
     QPushButton *popBackBtn;
     QLabel *statusLabel;

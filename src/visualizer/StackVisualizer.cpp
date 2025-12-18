@@ -137,11 +137,15 @@ StackVisualizer::StackVisualizer(QWidget *parent)
     clearBtn = new QPushButton("\U0001F5D1 Clear");
     clearBtn->setStyleSheet(btnStyle.arg("#95a5a6", "#7f8c8d", "#5d6d7e"));
     
+    reloadBtn = new QPushButton("\U0001F504 Reload");
+    reloadBtn->setStyleSheet(btnStyle.arg("#3498db", "#2980b9", "#21618c"));
+    
     buttonRow1->addWidget(pushBtn);
     buttonRow1->addWidget(popBtn);
     buttonRow1->addWidget(peekBtn);
     buttonRow1->addWidget(searchBtn);
     buttonRow1->addWidget(clearBtn);
+    buttonRow1->addWidget(reloadBtn);
     
     controlLayout->addLayout(buttonRow1);
     
@@ -169,6 +173,7 @@ StackVisualizer::StackVisualizer(QWidget *parent)
     connect(peekBtn, &QPushButton::clicked, this, &StackVisualizer::onPeek);
     connect(searchBtn, &QPushButton::clicked, this, &StackVisualizer::onSearch);
     connect(clearBtn, &QPushButton::clicked, this, &StackVisualizer::onClear);
+    connect(reloadBtn, &QPushButton::clicked, this, &StackVisualizer::onReload);
 }
 
 void StackVisualizer::paintEvent(QPaintEvent *event)
@@ -445,5 +450,19 @@ void StackVisualizer::onClear()
     lastOperation = "clear";
     updateStatus("All elements cleared from stack", "success");
     
+    update();
+}
+
+void StackVisualizer::onReload()
+{
+    stack.clear();
+    stack.push(15);
+    stack.push(30);
+    stack.push(45);
+    stack.push(60);
+    stack.push(75);
+    highlightIndex = -1;
+    lastOperation = "reload";
+    updateStatus("Stack reloaded with sample data", "success");
     update();
 }

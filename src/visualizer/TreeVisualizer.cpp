@@ -75,7 +75,8 @@ TreeVisualizer::TreeVisualizer(QWidget* parent)
     deleteBtn = new QPushButton("❌ Delete"); deleteBtn->setStyleSheet(btnStyle.arg("#e74c3c", "#c0392b", "#a93226"));
     searchBtn = new QPushButton("🔍 Search"); searchBtn->setStyleSheet(btnStyle.arg("#3498db", "#2980b9", "#21618c"));
     clearBtn = new QPushButton("🗑 Clear"); clearBtn->setStyleSheet(btnStyle.arg("#95a5a6", "#7f8c8d", "#5d6d7e"));
-    row1->addWidget(insertBtn); row1->addWidget(deleteBtn); row1->addWidget(searchBtn); row1->addWidget(clearBtn);
+    reloadBtn = new QPushButton("🔄 Reload"); reloadBtn->setStyleSheet(btnStyle.arg("#3498db", "#2980b9", "#21618c"));
+    row1->addWidget(insertBtn); row1->addWidget(deleteBtn); row1->addWidget(searchBtn); row1->addWidget(clearBtn); row1->addWidget(reloadBtn);
     gl->addLayout(row1);
 
     QHBoxLayout* row2 = new QHBoxLayout();
@@ -104,6 +105,7 @@ TreeVisualizer::TreeVisualizer(QWidget* parent)
     connect(deleteBtn, &QPushButton::clicked, this, &TreeVisualizer::onDelete);
     connect(searchBtn, &QPushButton::clicked, this, &TreeVisualizer::onSearch);
     connect(clearBtn, &QPushButton::clicked, this, &TreeVisualizer::onClear);
+    connect(reloadBtn, &QPushButton::clicked, this, &TreeVisualizer::onReload);
     connect(inorderBtn, &QPushButton::clicked, this, &TreeVisualizer::onInorder);
     connect(preorderBtn, &QPushButton::clicked, this, &TreeVisualizer::onPreorder);
     connect(postorderBtn, &QPushButton::clicked, this, &TreeVisualizer::onPostorder);
@@ -263,6 +265,15 @@ void TreeVisualizer::onSearch() {
 void TreeVisualizer::onClear() {
     if (tree.size() == 0) { updateStatus("Tree is already empty", "info"); return; }
     tree.clear(); highlightValue = std::numeric_limits<int>::min(); updateStatus("Cleared all nodes", "success"); update();
+}
+
+void TreeVisualizer::onReload() {
+    tree.clear();
+    int seedVals[] = {50, 30, 70, 20, 40, 60, 80};
+    for (int v : seedVals) tree.insert(v);
+    highlightValue = std::numeric_limits<int>::min();
+    updateStatus("BST reloaded with sample data", "success");
+    update();
 }
 
 static QString joinVec(const std::vector<int>& v) {

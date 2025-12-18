@@ -151,8 +151,12 @@ QueueVisualizer::QueueVisualizer(QWidget *parent)
     clearBtn = new QPushButton("\U0001F5D1 Clear");
     clearBtn->setStyleSheet(btnStyle.arg("#95a5a6", "#7f8c8d", "#5d6d7e"));
     
+    reloadBtn = new QPushButton("\U0001F504 Reload");
+    reloadBtn->setStyleSheet(btnStyle.arg("#3498db", "#2980b9", "#21618c"));
+    
     buttonRow2->addWidget(searchBtn);
     buttonRow2->addWidget(clearBtn);
+    buttonRow2->addWidget(reloadBtn);
     buttonRow2->addStretch();
     
     controlLayout->addLayout(buttonRow2);
@@ -182,6 +186,7 @@ QueueVisualizer::QueueVisualizer(QWidget *parent)
     connect(rearBtn, &QPushButton::clicked, this, &QueueVisualizer::onRear);
     connect(searchBtn, &QPushButton::clicked, this, &QueueVisualizer::onSearch);
     connect(clearBtn, &QPushButton::clicked, this, &QueueVisualizer::onClear);
+    connect(reloadBtn, &QPushButton::clicked, this, &QueueVisualizer::onReload);
 }
 
 void QueueVisualizer::paintEvent(QPaintEvent *event)
@@ -493,5 +498,19 @@ void QueueVisualizer::onClear()
     lastOperation = "clear";
     updateStatus("All elements cleared from queue", "success");
     
+    update();
+}
+
+void QueueVisualizer::onReload()
+{
+    queue.clear();
+    queue.enqueue(20);
+    queue.enqueue(35);
+    queue.enqueue(50);
+    queue.enqueue(65);
+    queue.enqueue(80);
+    highlightIndex = -1;
+    lastOperation = "reload";
+    updateStatus("Queue reloaded with sample data", "success");
     update();
 }

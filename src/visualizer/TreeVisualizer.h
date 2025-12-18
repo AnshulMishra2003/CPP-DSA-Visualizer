@@ -19,6 +19,7 @@ private slots:
     void onDelete();
     void onSearch();
     void onClear();
+    void onReload();
     void onInorder();
     void onPreorder();
     void onPostorder();
@@ -42,6 +43,7 @@ private:
     QPushButton* deleteBtn;
     QPushButton* searchBtn;
     QPushButton* clearBtn;
+    QPushButton* reloadBtn;
     QPushButton* inorderBtn;
     QPushButton* preorderBtn;
     QPushButton* postorderBtn;

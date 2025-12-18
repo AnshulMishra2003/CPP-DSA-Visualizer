@@ -51,11 +51,12 @@ GraphVisualizer::GraphVisualizer(QWidget* parent)
         "QGroupBox { font-size:14px; font-weight:bold; border:2px solid #3498db; border-radius:8px; margin-top:10px; padding-top:5px; }"
         "QGroupBox::title { left: 15px; padding: 0 5px; color:#3498db; }");
     QVBoxLayout* gl = new QVBoxLayout();
-    gl->setSpacing(5);
+    gl->setSpacing(6);
+    gl->setContentsMargins(10, 8, 10, 8);
 
     // Button style for all buttons
     QString btnStyle =
-        "QPushButton { padding:6px 12px; font-size:11px; font-weight:bold; border:none; border-radius:5px; color:white; background-color:%1; }"
+        "QPushButton { padding:8px 14px; font-size:12px; font-weight:bold; border:none; border-radius:6px; color:white; background-color:%1; }"
         "QPushButton:hover { background-color:%2; }"
         "QPushButton:pressed { background-color:%3; }";
 
@@ -70,9 +71,10 @@ GraphVisualizer::GraphVisualizer(QWidget* parent)
     typeCombo->addItem("Undirected Weighted");
     typeCombo->setMinimumWidth(150);
     typeCombo->setMaximumWidth(180);
+    typeCombo->setMinimumHeight(34);
     typeCombo->setStyleSheet(
-        "QComboBox { padding: 6px 10px; border: 2px solid #3498db; border-radius: 5px; "
-        "font-size: 11px; font-weight: bold; color: #2c3e50; background: white; }"
+        "QComboBox { padding: 8px 12px; border: 2px solid #3498db; border-radius: 6px; "
+        "font-size: 12px; font-weight: bold; color: #2c3e50; background: white; }"
         "QComboBox:hover { border-color: #2980b9; background: #ecf0f1; }"
         "QComboBox::drop-down { border: none; width: 25px; }"
         "QComboBox::down-arrow { image: url(none); width: 0px; height: 0px; "
@@ -85,24 +87,28 @@ GraphVisualizer::GraphVisualizer(QWidget* parent)
     toggleLayoutBtn = new QPushButton("Force: Off");
     toggleLayoutBtn->setCheckable(true);
     toggleLayoutBtn->setStyleSheet(
-        "QPushButton { padding: 6px 12px; font-size: 11px; font-weight: bold; border: 2px solid #3498db; border-radius: 5px; color: #2c3e50; background: #ecf6fd; }"
+        "QPushButton { padding: 8px 14px; font-size: 12px; font-weight: bold; border: 2px solid #3498db; border-radius: 6px; color: #2c3e50; background: #ecf6fd; }"
         "QPushButton:checked { background: #3498db; color: white; border-color: #2980b9; }"
     );
+    toggleLayoutBtn->setMinimumHeight(34);
     fitViewBtn = new QPushButton("Fit");
     fitViewBtn->setStyleSheet(
-        "QPushButton { padding: 6px 12px; font-size: 11px; font-weight: bold; border: 2px solid #16a085; border-radius: 5px; color: #2c3e50; background: #e8f8f5; }"
+        "QPushButton { padding: 8px 14px; font-size: 12px; font-weight: bold; border: 2px solid #16a085; border-radius: 6px; color: #2c3e50; background: #e8f8f5; }"
         "QPushButton:hover { background: #d0f2eb; }"
     );
+    fitViewBtn->setMinimumHeight(34);
     
     QLabel* vLbl = new QLabel("Vertex:");
     vLbl->setStyleSheet("font-size:11px; font-weight:bold; color:#2c3e50;");
     vertexInput = new QLineEdit();
     vertexInput->setPlaceholderText("Count");
     vertexInput->setMaximumWidth(60);
+    vertexInput->setMinimumHeight(32);
     vertexInput->setText("5");
-    vertexInput->setStyleSheet("padding:6px; border:2px solid #bdc3c7; border-radius:4px; font-size:11px;");
+    vertexInput->setStyleSheet("padding:8px; border:2px solid #bdc3c7; border-radius:5px; font-size:12px;");
     addVertexBtn = new QPushButton("➕ Add");
     addVertexBtn->setStyleSheet(btnStyle.arg("#27ae60", "#229954", "#1e8449"));
+    addVertexBtn->setMinimumHeight(34);
     
     line1->addWidget(typeLbl);
     line1->addWidget(typeCombo);
@@ -123,27 +129,33 @@ GraphVisualizer::GraphVisualizer(QWidget* parent)
     edgeU = new QLineEdit();
     edgeU->setPlaceholderText("From");
     edgeU->setMaximumWidth(50);
-    edgeU->setStyleSheet("padding:6px; border:2px solid #bdc3c7; border-radius:4px; font-size:11px;");
+    edgeU->setMinimumHeight(32);
+    edgeU->setStyleSheet("padding:8px; border:2px solid #bdc3c7; border-radius:5px; font-size:12px;");
     edgeV = new QLineEdit();
     edgeV->setPlaceholderText("To");
     edgeV->setMaximumWidth(50);
-    edgeV->setStyleSheet("padding:6px; border:2px solid #bdc3c7; border-radius:4px; font-size:11px;");
+    edgeV->setMinimumHeight(32);
+    edgeV->setStyleSheet("padding:8px; border:2px solid #bdc3c7; border-radius:5px; font-size:12px;");
     edgeW = new QLineEdit();
     edgeW->setPlaceholderText("Weight");
     edgeW->setMaximumWidth(50);
+    edgeW->setMinimumHeight(32);
     edgeW->setText("1");
-    edgeW->setStyleSheet("padding:6px; border:2px solid #bdc3c7; border-radius:4px; font-size:11px;");
+    edgeW->setStyleSheet("padding:8px; border:2px solid #bdc3c7; border-radius:5px; font-size:12px;");
     addEdgeBtn = new QPushButton("➕ Add");
     addEdgeBtn->setStyleSheet(btnStyle.arg("#e74c3c", "#c0392b", "#a93226"));
+    addEdgeBtn->setMinimumHeight(34);
     
     QLabel* searchLbl = new QLabel("Search:");
     searchLbl->setStyleSheet("font-size:11px; font-weight:bold; color:#2c3e50;");
     searchVertexInput = new QLineEdit();
     searchVertexInput->setPlaceholderText("Vertex ID");
     searchVertexInput->setMaximumWidth(70);
-    searchVertexInput->setStyleSheet("padding:6px; border:2px solid #bdc3c7; border-radius:4px; font-size:11px;");
+    searchVertexInput->setMinimumHeight(32);
+    searchVertexInput->setStyleSheet("padding:8px; border:2px solid #bdc3c7; border-radius:5px; font-size:12px;");
     searchVertexBtn = new QPushButton("🔍");
     searchVertexBtn->setStyleSheet(btnStyle.arg("#e74c3c", "#c0392b", "#a93226"));
+    searchVertexBtn->setMinimumHeight(34);
     
     line2->addWidget(eLbl);
     line2->addWidget(edgeU);
@@ -164,6 +176,8 @@ GraphVisualizer::GraphVisualizer(QWidget* parent)
     QHBoxLayout* line3 = new QHBoxLayout();
     clearBtn = new QPushButton("🗑 Clear");
     clearBtn->setStyleSheet(btnStyle.arg("#95a5a6", "#7f8c8d", "#5d6d7e"));
+    reloadBtn = new QPushButton("🔄 Reload");
+    reloadBtn->setStyleSheet(btnStyle.arg("#3498db", "#2980b9", "#21618c"));
     bfsBtn = new QPushButton("📊 BFS");
     bfsBtn->setStyleSheet(btnStyle.arg("#f39c12", "#e67e22", "#d68910"));
     dfsBtn = new QPushButton("📈 DFS");
@@ -172,7 +186,13 @@ GraphVisualizer::GraphVisualizer(QWidget* parent)
     playBFSBtn->setStyleSheet(btnStyle.arg("#2ecc71", "#27ae60", "#1e8449"));
     playDFSBtn = new QPushButton("▶ Play DFS");
     playDFSBtn->setStyleSheet(btnStyle.arg("#1abc9c", "#16a085", "#138d75"));
+    clearBtn->setMinimumHeight(34);
+    bfsBtn->setMinimumHeight(34);
+    dfsBtn->setMinimumHeight(34);
+    playBFSBtn->setMinimumHeight(34);
+    playDFSBtn->setMinimumHeight(34);
     line3->addWidget(clearBtn);
+    line3->addWidget(reloadBtn);
     line3->addWidget(bfsBtn);
     line3->addWidget(dfsBtn);
     line3->addWidget(playBFSBtn);
@@ -191,6 +211,7 @@ GraphVisualizer::GraphVisualizer(QWidget* parent)
     connect(typeCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &GraphVisualizer::onTypeChanged);
     connect(addVertexBtn, &QPushButton::clicked, this, &GraphVisualizer::onAddVertex);
     connect(addEdgeBtn, &QPushButton::clicked, this, &GraphVisualizer::onAddEdge);
+    connect(reloadBtn, &QPushButton::clicked, this, &GraphVisualizer::onReload);
     connect(clearBtn, &QPushButton::clicked, this, &GraphVisualizer::onClear);
     connect(searchVertexBtn, &QPushButton::clicked, this, &GraphVisualizer::onSearchVertex);
     connect(bfsBtn, &QPushButton::clicked, this, &GraphVisualizer::onBFS);
@@ -329,6 +350,26 @@ void GraphVisualizer::onClear() {
     nodePositions.clear();
     selectedStart = -1;
     updateStatus("Graph cleared.", "success");
+    update();
+}
+
+void GraphVisualizer::onReload() {
+    graph.clear();
+    nodePositions.clear();
+    selectedStart = -1;
+    
+    // Reload with sample data for DirectedUnweighted (default type)
+    for (int i = 0; i < 6; i++) graph.addVertex();
+    graph.addEdge(0, 1);
+    graph.addEdge(0, 2);
+    graph.addEdge(1, 3);
+    graph.addEdge(2, 3);
+    graph.addEdge(2, 4);
+    graph.addEdge(3, 5);
+    graph.addEdge(4, 5);
+    
+    computeLayout();
+    updateStatus("Graph reloaded with sample data", "success");
     update();
 }
 
@@ -479,9 +520,9 @@ void GraphVisualizer::computeCircularLayout() {
         controlsBottom = statusLabel->geometry().bottom();
     }
     
-    // Add substantial top offset to ensure drawing area starts well below controls
-    int topOffset = controlsBottom + 50;
-    if (topOffset < 200) topOffset = 200; // Minimum offset from top
+    // Add top offset to ensure drawing area starts below controls; keep lean to preserve space
+    int topOffset = controlsBottom + 30;
+    if (topOffset < 180) topOffset = 180; // Minimum offset from top
     
     int bottomMargin = 40;
     int sideMargin = 60;
@@ -672,22 +713,23 @@ void GraphVisualizer::drawGraph() {
         controlsBottom = statusLabel->geometry().bottom();
     }
     
-    int topOffset = controlsBottom + 50;
-    if (topOffset < 200) topOffset = 200;
+    int topOffset = controlsBottom + 30;
+    if (topOffset < 170) topOffset = 170;
     
     int bottomMargin = 40;
     int drawHeight = height() - topOffset - bottomMargin;
     if (drawHeight < 150) drawHeight = 150;
     int extraHeight = 0;
     if (useForceLayout) {
-        // allow vertical scrolling space proportional to node count
-        extraHeight = std::max(0, graph.vertexCount() * 18 - drawHeight / 2);
+        // allow vertical scrolling space proportional to node count but keep it tight
+        extraHeight = std::max(0, graph.vertexCount() * 10 - drawHeight / 3);
+        extraHeight = std::min(extraHeight, 900); // hard cap so scrollbar track stays usable
     }
     int totalHeight = drawHeight + extraHeight;
 
     // Configure scrollbar for force layout only
     if (useForceLayout) {
-        vScroll->setGeometry(width() - 18, topOffset, 16, drawHeight);
+        vScroll->setGeometry(width() - 14, topOffset, 12, drawHeight);
         vScroll->setRange(0, std::max(0, totalHeight - drawHeight));
         vScroll->setPageStep(drawHeight);
         vScroll->setSingleStep(40);

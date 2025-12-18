@@ -26,6 +26,7 @@ private slots:
     void onSearch();
     void onReverse();
     void onClear();
+    void onReload();
 
 private:
     void paintEvent(QPaintEvent *event) override;
@@ -47,6 +48,7 @@ private:
     QPushButton *searchBtn;
     QPushButton *reverseBtn;
     QPushButton *clearBtn;
+    QPushButton *reloadBtn;
     QLabel *statusLabel;
     QLabel *infoLabel;
     QLabel *sizeLabel;

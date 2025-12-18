@@ -170,9 +170,13 @@ LinkedListVisualizer::LinkedListVisualizer(QWidget *parent)
     clearBtn = new QPushButton("\U0001F6AE Clear All");
     clearBtn->setStyleSheet(btnStyle.arg("#c0392b", "#a93226", "#922b21"));
     
+    reloadBtn = new QPushButton("\U0001F504 Reload");
+    reloadBtn->setStyleSheet(btnStyle.arg("#3498db", "#2980b9", "#21618c"));
+    
     buttonRow3->addWidget(searchBtn);
     buttonRow3->addWidget(reverseBtn);
     buttonRow3->addWidget(clearBtn);
+    buttonRow3->addWidget(reloadBtn);
     buttonRow3->addStretch();
     
     controlLayout->addLayout(buttonRow3);
@@ -205,6 +209,7 @@ LinkedListVisualizer::LinkedListVisualizer(QWidget *parent)
     connect(searchBtn, &QPushButton::clicked, this, &LinkedListVisualizer::onSearch);
     connect(reverseBtn, &QPushButton::clicked, this, &LinkedListVisualizer::onReverse);
     connect(clearBtn, &QPushButton::clicked, this, &LinkedListVisualizer::onClear);
+    connect(reloadBtn, &QPushButton::clicked, this, &LinkedListVisualizer::onReload);
 }
 
 void LinkedListVisualizer::paintEvent(QPaintEvent *event)
@@ -558,5 +563,18 @@ void LinkedListVisualizer::onClear()
     highlightIndex = -1;
     updateStatus("All nodes cleared from linked list", "success");
     
+    update();
+}
+
+void LinkedListVisualizer::onReload()
+{
+    list.clear();
+    list.insertAtEnd(10);
+    list.insertAtEnd(25);
+    list.insertAtEnd(40);
+    list.insertAtEnd(55);
+    list.insertAtEnd(70);
+    highlightIndex = -1;
+    updateStatus("Linked list reloaded with sample data", "success");
     update();
 }

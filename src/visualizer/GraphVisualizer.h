@@ -116,6 +116,7 @@ private slots:
     void onAddVertex();
     void onAddEdge();
     void onClear();
+    void onReload();
     void onBFS();
     void onDFS();
     void onPlayBFS();
@@ -146,6 +147,7 @@ private:
     QLineEdit* edgeU, *edgeV, *edgeW;
     QPushButton* addEdgeBtn;
     QPushButton* clearBtn;
+    QPushButton* reloadBtn;
     QLineEdit* searchVertexInput;
     QPushButton* searchVertexBtn;
     QPushButton* bfsBtn, *dfsBtn;
